@@ -5,6 +5,11 @@
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
 
+
+char cities[MAX_CITIES][50];
+int cityCount = 0;
+
+
 void printMainMenu();
 void cityManagement();
 void distanceManagement();
@@ -56,5 +61,33 @@ printf("2.Distance Management\n");
 printf("3.Delivery Management\n");
 printf("4.Performance Reports\n");
 printf("5.Exit\n");
+}
 
+void cityManagement(){
+int choice;
+while(1){
+    printf("\n----City Management Menu----\n");
+    printf("1.Add City\n");
+    printf("2.Rename City\n");
+    printf("3.Remove City\n");
+    printf("4.Back to Main Menu\n");
+    printf("Enter your choice: ");
+    scanf("%d",&choice);
+
+    switch(choice){
+case 1:
+    addCity();
+    break;
+case 2:
+    renameCity();
+    break;
+case 3:
+    removeCity();
+    break;
+case 4:
+    return;
+default:
+    printf("Invalid choice!!!");
+}
+}
 }
