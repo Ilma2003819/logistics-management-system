@@ -110,3 +110,26 @@ void addNewCity()
     cityCount++;
     printf("City added successfully!!\n");
 }
+
+void renameCity()
+{
+    if(cityCount==0)
+    {
+        printf("No cities to rename!!\n");
+        return;
+    }
+    int cityIndex;
+    printf("Enter city index to rename(0-%d):",cityCount-1);
+    scanf("%d",&cityIndex);
+
+    if(cityIndex<0 || cityIndex>=cityCount)
+    {
+        printf("Invalid index!!\n");
+        return;
+    }
+    printf("Enter new city name: ");
+    scanf("%[^\n]s",cities[cityIndex]);
+    printf("City renamed successfully!!\n");
+}
+
+
