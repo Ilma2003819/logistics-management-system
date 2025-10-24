@@ -37,7 +37,7 @@ void distanceManagement();
 void addNewCity();
 void removeCity();
 void renameCity();
-void inputDistanceBetweenCities();
+void inputDistanceBetweenTwoCities();
 void displayDistanceTable();
 void vehicleManagement();
 void calculations(int index);
@@ -119,6 +119,34 @@ void cityManagement()
     }
 }
 
+void distanceManagement()
+{
+
+    int choice;
+    while(1)
+    {
+        printf("\n----Distance Management----\n");
+        printf("1.Input distances between two cities\n");
+        printf("2.Display distance table\n");
+        printf("3.Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+        case 1:
+            inputDistanceBetweenTwoCities();
+            break;
+        case 2:
+            displayDistanceTable();
+            break;
+        case 3:
+            return;
+        default:
+            printf("Invalid choice!!\n");
+        }
+    }
+}
 void addNewCity()
 {
     if(cityCount>=MAX_CITIES)
