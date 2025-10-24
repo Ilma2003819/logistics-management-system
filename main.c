@@ -18,6 +18,19 @@ int vehicleRate[MAX_VEHICLES]= {30,40,80}; // LKR
 int vehicleAvgSpeed[MAX_VEHICLES]= {60,50,45}; // km/h
 int vehicleFualEfficiency[MAX_VEHICLES]= {12,6,4}; // km/l
 
+int deliverySource[MAX_DELIVERIES];
+int deliveryDestination[MAX_DELIVERIES];
+int deliveryWeight[MAX_DELIVERIES];
+int deliveryVehicleType[MAX_DELIVERIES];
+double deliverCost[MAX_DELIVERIES];
+double estimatedDeliveryTime[MAX_DELIVERIES];
+double fuelUsed[MAX_DELIVERIES];
+double fuelCost[MAX_DELIVERIES];
+double totalOperationalCost[MAX_DELIVERIES];
+double profit[MAX_DELIVERIES];
+double customerCharge[MAX_DELIVERIES];
+int deliveryCount=0;
+
 void printMainMenu();
 void cityManagement();
 void distanceManagement();
