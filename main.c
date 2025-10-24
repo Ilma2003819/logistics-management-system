@@ -4,12 +4,19 @@
 
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
+#define MAX_VEHICLES 3
 
 
 char cities[MAX_CITIES][50];
 int cityCount = 0;
 
 int distance[MAX_CITIES][MAX_CITIES]= {0};
+
+char vehicleType[MAX_VEHICLES][20]= {"van","Truck","Lorry"};
+int vehicleCapacity[MAX_VEHICLES]= {1000,5000,10000}; // kg
+int vehicleRate[MAX_VEHICLES]= {30,40,80}; // LKR
+int vehicleAvgSpeed[MAX_VEHICLES]= {60,50,45}; // km/h
+int vehicleFualEfficiency[MAX_VEHICLES]= {12,6,4}; // km/l
 
 void printMainMenu();
 void cityManagement();
@@ -155,7 +162,7 @@ void removeCity()
 
     for(int i=0; i<MAX_CITIES; i++)
     {
-        for(int j;cityIndex<cityCount-1; j++)
+        for(int j; cityIndex<cityCount-1; j++)
         {
             distance[i][j]=distance[i][j+1];
             distance[i][cityCount-1]=0;
