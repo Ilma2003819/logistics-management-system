@@ -39,7 +39,7 @@ void removeCity();
 void renameCity();
 void inputDistanceBetweenTwoCities();
 void displayDistanceTable();
-void vehicleManagement();
+void deliverRequestHandling();
 void calculations(int index);
 void generateReport();
 
@@ -62,7 +62,7 @@ int main()
             distanceManagement();
             break;
         case 3:
-            vehicleManagement();
+            deliverRequestHandling();
             break;
         case 4:
             generateReport();
@@ -243,16 +243,61 @@ void inputDistanceBetweenTwoCities()
     distance[fromIndex][toIndex]=dist;
     printf("Distance set successfully!!\n");
 }
-void displayDistanceTable(){
-printf("\n----Distance Table----\n");
-for(int i=0;i<cityCount;i++){
-    printf("%s\t",cities[i]);}
-    printf("\n");
-for(int i=0;i<cityCount;i++){
-    printf("%s\t",cities[i]);
-    for(int j=0;j<cityCount;j++){
-        printf("%d\t",distance[i][j]);
+void displayDistanceTable()
+{
+    printf("\n----Distance Table----\n");
+    for(int i=0; i<cityCount; i++)
+    {
+        printf("%s\t",cities[i]);
     }
     printf("\n");
+    for(int i=0; i<cityCount; i++)
+    {
+        printf("%s\t",cities[i]);
+        for(int j=0; j<cityCount; j++)
+        {
+            printf("%d\t",distance[i][j]);
+        }
+        printf("\n");
+    }
 }
+void deliverRequestHandling()
+{
+    if(deliveryCount>=MAX_DELIVERIES)
+    {
+        printf("Delivery limit reached!!\n");
+        return;
+    }
+    int source,destination,weight,vtype;
+
+    printf("Enter source city index: ");
+    scanf("%d",&source);
+    printf("Enter destination city index: ");
+    scanf("%d",&destination);
+    if(source==destination)
+    {
+        printf("Source and Destination cannot be same!!\n");
+        return;
+    }
+    printf("Enter weight(kg): ");
+    scanf("%d",&weight);
+    printf("Select vehicle type(Van=0,Truck=1,Lorry=2): ");
+    scanf("%d",&vtype);
+    if(vtype<0||vtype>=MAX_VEHICLES)
+    {
+        printf("Invalid vehicle!!\n");
+        return;
+    }
+    if(weight>vehicleCapacity[vtype])
+    {
+        printf("Weight exceeds vehicle capacity!!\n");
+        return;
+    }
+    deliverySource[deliveryCount]=source;
+    deliveryDestination[deliveryCount]=destination;
+    deliveryWeight[deliveryCount]=weight;
+    deliveryVehicleType[deliveryCount]=vtype;
+    calculations(deliveryCount);
+    deliveryCount++;
+    printf("\nDelivery added successfully!!\n");
 }
