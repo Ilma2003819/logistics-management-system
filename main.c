@@ -5,6 +5,7 @@
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
 #define MAX_VEHICLES 3
+#define FUEL_PRICE 310
 
 
 char cities[MAX_CITIES][50];
@@ -22,7 +23,7 @@ int deliverySource[MAX_DELIVERIES];
 int deliveryDestination[MAX_DELIVERIES];
 int deliveryWeight[MAX_DELIVERIES];
 int deliveryVehicleType[MAX_DELIVERIES];
-double deliverCost[MAX_DELIVERIES];
+double deliveryCost[MAX_DELIVERIES];
 double estimatedDeliveryTime[MAX_DELIVERIES];
 double fuelUsed[MAX_DELIVERIES];
 double fuelCost[MAX_DELIVERIES];
@@ -300,4 +301,34 @@ void deliverRequestHandling()
     calculations(deliveryCount);
     deliveryCount++;
     printf("\nDelivery added successfully!!\n");
+}
+
+void calculations(int index)
+{
+    int D= distance[deliverySource[index]][deliveryDestination[index]];
+    int W= deliveryWeight[index];
+    int V=deliveryVehicleType[index];
+
+    deliveryCost[index]=D * vehicleRate[V] * (1+(double)W/vehicleCapacity[V]);
+    estimatedDeliveryTime[index]=(double)D/vehicleAvgSpeed[V];
+    fuelUsed[index]=(double)D/vehicleFualEfficiency[V];
+    fuelCost[index]=fuelCost[index]*FUEL_PRICE;
+    totalOperationalCost[index]=deliveryCost[index]+fuelCost[index];
+    profit[index]=0.25*deliveryCost[index];
+    customerCharge[index]=totalOperationalCost[index]+profit[index];
+
+    printf("\n=========================\n");
+    printf("\nDELIVERY COST ESTIMATION\n");
+    printf("From: %s\n",cities[deliverySource[index]]);
+    printf("To: %s\n",cities[deliveryDestination[index]]);
+    printf("Vehicle: %s\n",vehicleType[V]);
+    printf("Weight: %d kg\n",W);
+    printf("----------------------------\n");
+    printf("Base Cost: %.2lf LKR\n",deliveryCost[index]);
+    printf("Fuel Used: %.2lf L\n",fuelUsed[index]);
+    printf("Operational Cost: %.2lf LKR\n",totalOperationalCost[index]);
+    printf("Profit: %.2lf LKR\n",profit[index]);
+    printf("Customer Charge: %.2lf LKR\n",customerCharge[index]);
+    printf("Estimated Time: %.2lf hour\n",estimatedDeliveryTime[index]);
+    printf("============================\n");
 }
