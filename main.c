@@ -103,7 +103,7 @@ void cityManagement()
         switch(choice)
         {
         case 1:
-            addCity();
+            addNewCity();
             break;
         case 2:
             renameCity();
@@ -219,24 +219,27 @@ void removeCity()
         }
     }
 }
-void inputDistanceBetweenTwoCities(){
+void inputDistanceBetweenTwoCities()
+{
 
-if(cityCount<2){
-    printf("Input at least 2 cities!!\n");
-    return;
-}
-int fromIndex,toIndex,dist;
-printf("Enter source city index:");
-scanf("%d",&fromIndex);
-printf("Enter destination city index: ");
-scanf("%d",&toIndex);
+    if(cityCount<2)
+    {
+        printf("Input at least 2 cities!!\n");
+        return;
+    }
+    int fromIndex,toIndex,dist;
+    printf("Enter source city index:");
+    scanf("%d",&fromIndex);
+    printf("Enter destination city index: ");
+    scanf("%d",&toIndex);
 
-if (fromIndex==toIndex){
-    printf("Source and destination cannot be same!!\n");
-    printf("Enter distance(km): ");
-    scanf("%d",&dist);
-}
-distance[fromIndex][toIndex]=dist;
-distance[fromIndex][toIndex]=dist;
-printf("Distance set successfully!!\n");
+    if (fromIndex==toIndex)
+    {
+        printf("Source and destination cannot be same!!\n");
+        printf("Enter distance(km): ");
+        scanf("%d",&dist);
+    }
+    distance[fromIndex][toIndex]=dist;
+    distance[fromIndex][toIndex]=dist;
+    printf("Distance set successfully!!\n");
 }
