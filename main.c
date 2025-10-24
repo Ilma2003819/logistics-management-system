@@ -189,7 +189,7 @@ void removeCity()
     }
     int cityIndex;
     printf("Enter city index to remove(0-%d: ",cityCount-1);
-    scand("%d",&cityIndex);
+    scanf("%d",&cityIndex);
 
     if(cityIndex<0 || cityIndex>=cityCount)
     {
@@ -242,4 +242,17 @@ void inputDistanceBetweenTwoCities()
     distance[fromIndex][toIndex]=dist;
     distance[fromIndex][toIndex]=dist;
     printf("Distance set successfully!!\n");
+}
+void displayDistanceTable(){
+printf("\n----Distance Table----\n");
+for(int i=0;i<cityCount;i++){
+    printf("%s\t",cities[i]);}
+    printf("\n");
+for(int i=0;i<cityCount;i++){
+    printf("%s\t",cities[i]);
+    for(int j=0;j<cityCount;j++){
+        printf("%d\t",distance[i][j]);
+    }
+    printf("\n");
+}
 }
