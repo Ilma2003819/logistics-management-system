@@ -9,6 +9,7 @@
 char cities[MAX_CITIES][50];
 int cityCount = 0;
 
+int distance[MAX_CITIES][MAX_CITIES]= {0};
 
 void printMainMenu();
 void cityManagement();
@@ -132,4 +133,45 @@ void renameCity()
     printf("City renamed successfully!!\n");
 }
 
+void removeCity()
+{
+    if(cityCount==0)
+    {
+        printf("No cities to remove!!\n");
+    }
+    int cityIndex;
+    printf("Enter city index to remove(0-%d: ",cityCount-1);
+    scand("%d",&cityIndex);
+
+    if(cityIndex<0 || cityIndex>=cityCount)
+    {
+        printf("Invalid index!!\n");
+        return;
+    }
+    for(int i=0; i<cityCount-1; i++)
+    {
+        strcpy(cities[i],cities[i+1]);
+    }
+
+    for(int i=0; i<MAX_CITIES; i++)
+    {
+        for(int j;cityIndex<cityCount-1; j++)
+        {
+            distance[i][j]=distance[i][j+1];
+            distance[i][cityCount-1]=0;
+        }
+        for(int i=cityIndex; i<cityCount-1; i++)
+        {
+            for(int j=0; MAX_CITIES; j++)
+            {
+                distance[i][j]=distance[i+1][j];
+                cityCount--;
+                printf("City removed successfully!!\n");
+            }
+        }
+    }
+
+
+
+}
 
