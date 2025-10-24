@@ -25,69 +25,88 @@ void generateReport();
 
 int main()
 {
-   int choice;
-   while(1){
-    printMainMenu();
-    printf("Enter your choice: ");
-    scanf("%d",&choice);
+    int choice;
+    while(1)
+    {
+        printMainMenu();
+        printf("Enter your choice: ");
+        scanf("%d",&choice);
 
-    switch(choice){
-case 1:
-    cityManagement();
-    break;
-case 2:
-    distanceManagement();
-    break;
-case 3:
-    vehicleManagement();
-    break;
-case 4:
-    generateReport();
-    break;
-case 5:
-    printf("Exiting Program!!!\n");
-    break;
-default:
-    printf("Invalid choice...Try a valid choice!!!");
+        switch(choice)
+        {
+        case 1:
+            cityManagement();
+            break;
+        case 2:
+            distanceManagement();
+            break;
+        case 3:
+            vehicleManagement();
+            break;
+        case 4:
+            generateReport();
+            break;
+        case 5:
+            printf("Exiting Program!!!\n");
+            break;
+        default:
+            printf("Invalid choice...Try a valid choice!!!");
+        }
     }
-   }
     return 0;
 }
 
-void printMainMenu(){
-printf("\n==== Logistics Management System ====\n");
-printf("1.City Management\n");
-printf("2.Distance Management\n");
-printf("3.Delivery Management\n");
-printf("4.Performance Reports\n");
-printf("5.Exit\n");
+void printMainMenu()
+{
+    printf("\n==== Logistics Management System ====\n");
+    printf("1.City Management\n");
+    printf("2.Distance Management\n");
+    printf("3.Delivery Management\n");
+    printf("4.Performance Reports\n");
+    printf("5.Exit\n");
 }
 
-void cityManagement(){
-int choice;
-while(1){
-    printf("\n----City Management Menu----\n");
-    printf("1.Add City\n");
-    printf("2.Rename City\n");
-    printf("3.Remove City\n");
-    printf("4.Back to Main Menu\n");
-    printf("Enter your choice: ");
-    scanf("%d",&choice);
+void cityManagement()
+{
+    int choice;
+    while(1)
+    {
+        printf("\n----City Management Menu----\n");
+        printf("1.Add City\n");
+        printf("2.Rename City\n");
+        printf("3.Remove City\n");
+        printf("4.Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d",&choice);
 
-    switch(choice){
-case 1:
-    addCity();
-    break;
-case 2:
-    renameCity();
-    break;
-case 3:
-    removeCity();
-    break;
-case 4:
-    return;
-default:
-    printf("Invalid choice!!!");
+        switch(choice)
+        {
+        case 1:
+            addCity();
+            break;
+        case 2:
+            renameCity();
+            break;
+        case 3:
+            removeCity();
+            break;
+        case 4:
+            return;
+        default:
+            printf("Invalid choice!!!");
+        }
+    }
 }
-}
+
+void addNewCity()
+{
+    if(cityCount>=MAX_CITIES)
+    {
+        printf("Invalid input.Try 1 to 50\n");
+        return;
+    }
+    printf("Enter City name: ");
+    scanf("%[^\n]s",cities[cityCount]);
+    cityCount++;
+    printf("City added successfully!!\n");
 }
