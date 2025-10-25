@@ -70,7 +70,7 @@ int main()
             break;
         case 5:
             printf("Exiting Program!!!\n");
-            break;
+            exit(0);
         default:
             printf("Invalid choice...Try a valid choice!!!");
         }
@@ -156,6 +156,7 @@ void addNewCity()
         return;
     }
     printf("Enter City name: ");
+    getchar();
     scanf("%[^\n]s",cities[cityCount]);
     cityCount++;
     printf("City added successfully!!\n");
@@ -178,6 +179,7 @@ void renameCity()
         return;
     }
     printf("Enter new city name: ");
+    getchar();
     scanf("%[^\n]s",cities[cityIndex]);
     printf("City renamed successfully!!\n");
 }
@@ -187,12 +189,13 @@ void removeCity()
     if(cityCount==0)
     {
         printf("No cities to remove!!\n");
+        return;
     }
     int cityIndex;
-    printf("Enter city index to remove(0-%d: ",cityCount-1);
+    printf("Enter city index to remove(0-%d): ",cityCount-1);
     scanf("%d",&cityIndex);
 
-    if(cityIndex<0 || cityIndex>=cityCount)
+    if(cityIndex<0 || cityIndex >= cityCount)
     {
         printf("Invalid index!!\n");
         return;
@@ -202,24 +205,30 @@ void removeCity()
         strcpy(cities[i],cities[i+1]);
     }
 
-    for(int i=0; i<MAX_CITIES; i++)
+    for(int i=0; i<cityCount; i++)
     {
-        for(int j; cityIndex<cityCount-1; j++)
+
+        for(int j=cityIndex; j<cityCount-1; j++)
         {
             distance[i][j]=distance[i][j+1];
-            distance[i][cityCount-1]=0;
         }
-        for(int i=cityIndex; i<cityCount-1; i++)
+
+        distance[i][cityCount-1]=0;
+    }
+    for(int i=cityIndex; i<cityCount-1; i++)
+    {
+        for(int j=0; j<cityCount ; j++)
         {
-            for(int j=0; MAX_CITIES; j++)
-            {
-                distance[i][j]=distance[i+1][j];
-                cityCount--;
-                printf("City removed successfully!!\n");
-            }
+
+            distance[i][j]=distance[i+1][j];
         }
     }
+    cityCount--;
+    printf("City removed successfully!!\n");
+
 }
+
+
 void inputDistanceBetweenTwoCities()
 {
 
@@ -237,29 +246,41 @@ void inputDistanceBetweenTwoCities()
     if (fromIndex==toIndex)
     {
         printf("Source and destination cannot be same!!\n");
-        printf("Enter distance(km): ");
-        scanf("%d",&dist);
+        return;
     }
+
+    printf("Enter distance(km): ");
+    scanf("%d",&dist);
+
     distance[fromIndex][toIndex]=dist;
-    distance[fromIndex][toIndex]=dist;
+    distance[toIndex][fromIndex]=dist;
     printf("Distance set successfully!!\n");
 }
 void displayDistanceTable()
 {
     printf("\n----Distance Table----\n");
+    printf("%-10s","");
     for(int i=0; i<cityCount; i++)
     {
-        printf("%s\t",cities[i]);
+        printf("%-10s",cities[i]);
     }
     printf("\n");
     for(int i=0; i<cityCount; i++)
     {
-        printf("%s\t",cities[i]);
+        printf("%-10s",cities[i]);
         for(int j=0; j<cityCount; j++)
         {
-            printf("%d\t",distance[i][j]);
+            if(distance[i][j]==0)
+            {
+                printf("%-10s","-");
+            }
+            else
+            {
+                printf("%-10d",distance[i][j]);
+            }
         }
         printf("\n");
+
     }
 }
 void deliverRequestHandling()
@@ -312,7 +333,7 @@ void calculations(int index)
     deliveryCost[index]=D * vehicleRate[V] * (1+(double)W/vehicleCapacity[V]);
     estimatedDeliveryTime[index]=(double)D/vehicleAvgSpeed[V];
     fuelUsed[index]=(double)D/vehicleFualEfficiency[V];
-    fuelCost[index]=fuelCost[index]*FUEL_PRICE;
+    fuelCost[index]=fuelUsed[index]*FUEL_PRICE;
     totalOperationalCost[index]=deliveryCost[index]+fuelCost[index];
     profit[index]=0.25*deliveryCost[index];
     customerCharge[index]=totalOperationalCost[index]+profit[index];
@@ -331,4 +352,42 @@ void calculations(int index)
     printf("Customer Charge: %.2lf LKR\n",customerCharge[index]);
     printf("Estimated Time: %.2lf hour\n",estimatedDeliveryTime[index]);
     printf("============================\n");
+}
+
+void generateReport()
+{
+    if(deliveryCount==0)
+    {
+        printf("No deliveries yet!!\n");
+        return;
+    }
+    double totalDistance=0,totalTime=0,totalRevenue=0,totalProfit=0;
+    int longestRoute=0,shortestRoute=distance[deliverySource[0]][deliveryDestination[0]];
+
+    for(int i=0; i<deliveryCount; i++)
+    {
+        int d = distance[deliverySource[i]][deliveryDestination[i]];
+        totalDistance += d;
+        totalTime += estimatedDeliveryTime[i];
+        totalRevenue += customerCharge[i];
+        totalProfit += profit[i];
+        if(d>longestRoute)
+        {
+            longestRoute = d;
+        }
+        if(d < shortestRoute)
+        {
+            shortestRoute = d;
+        }
+    }
+    printf("\n=====PERFORMANCE REPORT=====\n");
+    printf("Total Deliveries Completed: %d\n",deliveryCount);
+    printf("Total Distance Covered: %.2lf km\n",totalDistance);
+    printf("Average Delivery Time: %.2lf hours\n",totalTime/deliveryCount);
+    printf("Total Revenue: %.2lf LKR\n",totalRevenue);
+    printf("Total Profit: %.2lf LKR\n",totalProfit);
+    printf("Longest Route: %d km\n",longestRoute);
+    printf("Shortest Route: %d km\n",shortestRoute);
+    printf("================================\n");
+
 }
